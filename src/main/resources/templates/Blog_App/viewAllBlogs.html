@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Blog</title>
+	<!-- Link Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<style>
+	/* CSS for hover effect */
+	.blog-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		background-color: aliceblue;
+	}
+
+	/* CSS for live score container */
+	.live-score-container {
+		position: fixed;
+		top: 60px;
+		right: 20px;
+		background-color: #f8f9fa;
+		border-radius: 10px;
+		padding: 10px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	/* CSS for live score title */
+	.live-score-title {
+		font-size: 16px;
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
+
+	/* CSS for live score content */
+	.live-score-content {
+		font-size: 14px;
+	}
+	/*css for donate us text*/
+	#donateUs :hover{
+	color: green;	
+	}
+</style>
+
+
+<body class="d-flex flex-column vh-100">
+	<!-- Include Navigation Bar -->
+	<div th:replace="NavBar.html"></div>
+
+
+	<!-- Live Cricket Score Container -->
+	<div class="live-score-container">
+		<div class="live-score-title">Live Cricket Score: <a th:href="@{/live_scores}">View All</a></div>
+		<!-- Here you can dynamically update the content with live cricket score -->
+		<div id="live-score-content">
+			<p>Loading live score...</p>
+		</div>
+	</div>
+
+
+	<div class="container mt-3">
+		<p id="donateUs"><a th:href="@{/DonateUs}">Donate Us!!</a></p>
+
+		<h1 class="mb-2 text-center text-secondary">Blog Posts</h1>
+
+		<!-- Link for new blogger to write a blog -->
+		<p>
+			<a href="/user/addNewBlog" style="text-decoration: none;">Write a Blog !!</a>
+		</p>
+
+		<div th:if="${blogs.empty}">
+			<p>No blog posts yet. <a href="/user/addNewBlog">Add first blog post</a></p>
+		</div>
+		<div th:if="${not blogs.empty}">
+			<div class="row">
+				<div th:each="blog : ${blogs}" class="col-md-4 mb-4">
+					<div class="card blog-card">
+						<div class="card-body">
+							<h5 class="card-title text-success" th:text="${blog.title}"></h5>
+							<p class="card-text" th:if="${blog.content != null}"
+								th:text="${blog.content.length() > 20 ? blog.content.substring(0, 30) + '...' : blog.content}">
+							</p>
+							<p class="card-text">
+								<small class="text-muted">Author: <span
+										th:text="${blog.author.username}"></span></small>
+							</p>
+							<p class="card-text">
+								<small class="text-muted">Published: <span th:text="${blog.createdAt}"></span></small>
+							</p>
+							<a th:href="@{'/viewAllBlogs/read/' + ${blog.id}}" class="btn btn-primary mt-3">Read
+								More</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- JavaScript for live cricket score -->
+	<script>
+		// Function to fetch live cricket scores from the API endpoint
+		function fetchLiveScores() {
+			var apiUrl = 'https://api.cricapi.com/v1/currentMatches?apikey=YOUR_API_KEY';
+
+			fetch(apiUrl)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					return response.json();
+				})
+				.then(data => {
+					if (data.data && data.data.length > 0) {
+						// Clear previous scores
+						document.getElementById('live-score-content').innerHTML = '';
+
+						// Filter live matches
+						var liveMatches = data.data.filter(match => match.matchStarted && !match.matchEnded);
+
+						if (liveMatches.length > 0) {
+							// Iterate over each live match
+							liveMatches.forEach(match => {
+								// Create a div element for each match
+								var matchDiv = document.createElement('div');
+								matchDiv.classList.add('match-score');
+
+								// Format the score information
+								var scoreText = match.name + ': ' + match.status;
+
+								// Create a text node with the formatted score
+								var textNode = document.createTextNode(scoreText);
+
+								// Append the text node to the match div
+								matchDiv.appendChild(textNode);
+
+								// Append the match div to the live score container
+								document.getElementById('live-score-content').appendChild(matchDiv);
+							});
+						} else {
+							// If no live matches available
+							document.getElementById('live-score-content').innerText = 'No live matches available';
+						}
+					} else {
+						document.getElementById('live-score-content').innerText = 'No live matches available';
+					}
+				})
+				.catch(error => console.error('Error fetching live scores:', error));
+		}
+
+		// Function to periodically fetch and update live cricket scores
+		function updateLiveScores() {
+			// Fetch live cricket scores initially
+			fetchLiveScores();
+
+			// Set interval to periodically update live cricket scores
+			setInterval(fetchLiveScores, 60000); // Update every 10 seconds
+		}
+
+		// Call the updateLiveScores function to start updating live cricket scores
+		updateLiveScores();
+	</script>
+
+
+
+
+</body>
+
+</html>

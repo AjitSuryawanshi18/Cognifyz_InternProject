@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Welcome to User Dashboard</title>
+	<!-- Link Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<style>
+		body {
+			background-color: #f8f9fa;
+		}
+
+		.container {
+			max-width: 800px;
+		}
+
+		.jumbotron {
+			background: url('https://source.unsplash.com/800x600/?technology') no-repeat center center;
+			background-size: cover;
+			color: #fff;
+			padding: 100px 0;
+			margin-bottom: 0;
+			height: 100vh;
+		}
+
+		.navbar {
+			background-color: #2c3e50;
+			/* Dark blue navbar */
+		}
+
+		.navbar-brand,
+		.navbar-nav .nav-link {
+			color: #fff;
+		}
+
+		.navbar-brand:hover,
+		.navbar-nav .nav-link:hover {
+			color: #f39c12;
+			/* Yellow on hover */
+		}
+
+		.btn-custom {
+			background-color: #3498db;
+			border-color: #3498db;
+			color: #fff;
+			padding: 10px 20px;
+			font-size: 18px;
+			border-radius: 5px;
+			transition: background-color 0.3s ease;
+		}
+
+		.btn-custom:hover {
+			background-color: #2980b9;
+			border-color: #2980b9;
+		}
+
+		.btn-custom-outline {
+			background-color: transparent;
+			border-color: #3498db;
+			color: #3498db;
+			padding: 10px 20px;
+			font-size: 18px;
+			border-radius: 5px;
+			transition: background-color 0.3s ease, color 0.3s ease;
+		}
+
+		.btn-custom-outline:hover {
+			background-color: #3498db;
+			color: #fff;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-expand-lg navbar-dark">
+		<div class="container">
+			<a class="navbar-brand" href="#">
+				<span style="color: lightskyblue;">B</span>
+				<span style="color: orangered;">l</span>
+				<span style="color: orange;">o</span>
+				<span style="color: green;">G</span>
+				<span style="color: rgb(0, 255, 255);">i</span>
+				<span style="color: yellow;">F</span>
+				<span style="color: pink;">y</span>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<!-- Display the user's name -->
+					<li class="nav-item">
+						<span class="nav-link">Welcome, <span th:text="${username}"></span>!</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/logout">Logout</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Jumbotron with Background Video -->
+	<div class="jumbotron text-center">
+		<h1 class="display-4 text-info fw-bolder">Welcome to User Dashboard</h1>
+		<p class="lead"> <span class="nav-link text-success fw-bolder">Welcome, <span
+					style="color: dodgerblue; font-weight: bolder;" th:text="${username}"></span>!</span>
+			<span class="text-secondary fw-bolder">You are logged in.</span>
+		</p>
+		<a th:href="@{/user/addNewBlog}" class="btn btn-custom-outline mt-2">Write New Blog</a>
+		<a th:href="@{/user/myAllBlogs}" class="btn btn-custom-outline mt-2">My Blogs</a>
+	</div>
+
+	<!-- Bootstrap JS dependencies -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

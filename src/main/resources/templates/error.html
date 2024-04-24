@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .error-container {
+            max-width: 80%;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>Error</h1>
+        <div>
+            <span class="text-secondary">An unexpected error occurred: </span><br>
+            <span class="text-danger" style="font-size: large; font-weight: 900;" th:text="${errorMessage}">Something Went Wrong!!</span><br>
+            <span class="text-secondary">Please try again later!</span>
+        </div>
+        <!-- Add additional content or actions as needed -->
+        <div> 
+            <!-- JavaScript function to go back to the previous page -->
+            <button class="btn btn-outline-primary mt-2" onclick="goBack()">Take Me Back!</button>
+        </div>
+    </div>
+
+    <!-- JavaScript function to go back to the previous page -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

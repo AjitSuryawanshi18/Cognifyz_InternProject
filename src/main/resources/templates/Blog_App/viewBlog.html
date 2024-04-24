@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>View Blog</title>
+    <!-- Link Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            border: 1px solid #ced4da;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .card-title {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #2e86de; /* Blue color for title */
+        }
+
+        .card-text {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333; /* Black color for content */
+        }
+
+        .card-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #ced4da;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .btn-back {
+            background-color: #2e86de; /* Blue color for button */
+            border-color: #2e86de;
+            color: #fff;
+        }
+
+        .btn-back:hover {
+            background-color: #205d9b; /* Darker blue on hover */
+            border-color: #205d9b;
+        }
+
+        .author-name {
+            color: #27ae60; /* Green color for author name */
+            font-weight: bold;
+        }
+
+        .published-date {
+            color: #e74c3c; /* Red color for publication date */
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column vh-100">
+    <!-- Include Navigation Bar -->
+    <div th:replace="NavBar.html"></div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title" th:text="${blog.title}">Sample Title</h2>
+                        <p class="card-text" th:text="${blog.content}">Sample content goes here.</p>
+                        <p class="card-text">
+                            <small class="text-muted">Author: <span class="author-name" th:text="${blog.author.fullName}">John Doe</span></small>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">Published: <span class="published-date" th:text="${blog.createdAt}">2024-04-16</span></small>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        
+                        <a href="/viewAllBlogs" class="btn btn-back">Back to All Blogs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

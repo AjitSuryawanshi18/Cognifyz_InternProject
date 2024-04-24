@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Form Submission</title>
+	<!--	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/wave.css">
+	<link rel="stylesheet" href="css/animationstyle.css">-->
+	<link rel="stylesheet" th:href="@{css/style.css}">
+	<link rel="stylesheet" th:href="@{css/wave.css}">
+	<link rel="stylesheet" th:href="@{css/animationstyle.css}">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+	<style>
+ /* Focus effect for input fields */
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="text"]:focus,
+        input[type="tel"]:focus {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+	</style>
+</head>
+
+<body class="d-flex flex-column vh-100">
+	<!-- Include Navigation Bar -->
+	<div th:replace="NavBar.html"></div>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div id="formContainer">
+					<!--th:object="${formData}"  should not change the name it will provides bugs -->
+					<form id="registrationForm" action="#" th:action="@{/submit}" th:object="${formData}" method="post">
+						<h2 class="register-yourself">REGISTER YOURSELF</h2>
+						<i class="text-danger">All Fields Are Mandatory!!</i>
+
+						<!--SERVER SIDE VALIDATION MESSAGE IF ANY VALIDATION FAILS AT SERVER SIDE IT WILL DISPLAYED HERE-->
+						<!-- Display error messages for each field after server side validation if fails any -->
+						<div th:each="fieldError : ${errors}">
+							<div th:each="error : ${fieldError}" th:if="${error.field}">
+								<p class="error" th:text="${error.defaultMessage}"></p>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="full_name">Full Name:</label>
+							<input type="text" class="form-control" id="full_name" th:field="*{fullName}" required
+								minlength="1">
+							<span id="fullNameError" class="error"></span>
+						</div>
+
+						<div class="form-group">
+							<label for="email">Email Address:</label>
+							<input type="email" class="form-control" id="email" th:field="*{email}" required>
+							<span id="emailError" class="error"></span>
+						</div>
+
+						<div class="form-group">
+							<label for="username">Username:</label>
+							<input type="text" class="form-control" id="username" th:field="*{username}">
+
+						</div>
+
+						<div class="form-group">
+							<label for="date_of_birth">Date of Birth:</label>
+							<input type="date" class="form-control" id="date_of_birth" th:field="*{dateOfBirth}"
+								required>
+							<span id="dobError" class="error"></span>
+						</div>
+
+						<div class="form-group">
+							<label for="gender">Gender:</label>
+							<select class="form-control" id="gender" th:field="*{gender}" required>
+								<option value="">Select Gender</option>
+								<option value="male">Male</option>
+								<option value="female">Female</option>
+								<option value="other">Other</option>
+							</select>
+							<span id="genderError" class="error"></span>
+							<!-- Add a span element to display dynamic message -->
+							<span class="text-info" id="genderMessage"></span>
+
+						</div>
+
+						<div class="form-group">
+							<label for="phone">Phone Number:</label>
+							<input type="tel" class="form-control" id="phone" th:field="*{phoneNo}">
+							<span id="phoneError" class="error"></span>
+						</div>
+
+						<div class="form-group">
+							<label for="password">Password:</label>
+							<input type="password" class="form-control" id="password" th:field="*{password}" required
+								minlength="8">
+							<span id="passwordError" class="error"></span>
+							<span id="passwordStrengthMessage" class="error"></span>
+							<!-- Add a span element to display password strength using dom  -->
+							<span class="text-info" id="passwordStrength"></span><br>
+							<small class="form-text text-muted">Password must be at least 8 characters long and contain
+								at least one lowercase letter, one uppercase letter, one digit, and one special
+								character (@$!%*?&).</small>
+
+						</div>
+
+						<div class="form-group">
+							<label for="confirm_password">Confirm Password:</label>
+							<input type="password" class="form-control" id="confirm_password"
+								th:field="*{confirmPassword}" required>
+							<span id="confirmPasswordError" class="error"></span>
+						</div>
+
+						<div class="form-group form-check">
+							<input type="checkbox" class="form-check-input" id="terms_agreement"
+								th:field="*{termsAgreement}" value="true" required>
+							<label class="form-check-label" for="terms_agreement">I agree to the <a href="#"
+									onclick="openTermsPopup()">terms and conditions</a>.</label>
+							<span id="termsError" class="error"></span>
+						</div>
+						<div class="text-center">
+							<button class="btn btn-primary mb-3" id="submitButton" type="submit">Submit</button>
+
+							<!-- OAuth2 login links -->
+							<div class="form-group">
+								<h6>OR</h6><a th:href="@{/login}" style="text-decoration: none;"
+									class="social-login">Social Login</a>
+								<p class="text-warning">Already registered?<a href="/login"
+										style="text-decoration: none;" class="social-login"> Login</a></p>
+							</div>
+							<style>
+								.social-login:hover {
+									color: deepskyblue;
+									font-weight: 600;
+								}
+							</style>
+
+						</div>
+
+
+
+
+					</form>
+				</div>
+
+				<!-- Wave effect container -->
+				<div class="wave-container" id="waveContainer">
+					<div class="centre">
+						<div class="wave"></div>
+						<div class="wave"></div>
+						<div class="wave"></div>
+						<div class="wave"></div>
+						<div class="wave"></div>
+						<div class="wave"></div>
+						<div class="wave"></div>
+						<div class="wave"></div>
+						<div class="wave"></div>
+						<div class="wave"></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+
+		<!--script url for terms and condition pop up
+    -->
+		<script th:src="@{js/script.js}"></script>
+		<!--script for client side validation-->
+		<script th:src="@{js/clientSideValidation.js}"></script>
+		<!--script for client side validation-->
+		<script th:src="@{js/complexValidation.js}"></script>
+		<!-- dom based iterations script-->
+		<script th:src="@{js/DomBasedInteractions.js}"></script>
+
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+			crossorigin="anonymous"></script>
+
+		<script>
+
+		</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!--    <div th:utext="${liveScores}"></div>
+--><!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Live Scores</title>
+    <!-- Link Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-4">
+		<a th:href="@{/viewAllBlogs}">Go Back</a>
+        <h1 class="text-center mb-4">Cricket Live Scores</h1>
+        <div id="liveScoresContainer">
+            <!-- Live scores will be displayed here -->
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        // Sample live scores JSON data
+        var liveScoresJson = /*[[${liveScores}]]*/ `{"data":[{"name":"Pakistan Women vs West Indies Women, 1st ODI (ICC Championship Match)","status":"Pakistan Women need 163 runs","venue":"National Stadium, Karachi","date":"2024-04-18","teams":["Pakistan Women","West Indies Women"]},{"name":"Gujarat Titans vs Delhi Capitals, 32nd Match","status":"Delhi Capitals won by 6 wkts","venue":"Narendra Modi Stadium, Ahmedabad","date":"2024-04-17","teams":["Gujarat Titans","Delhi Capitals"]},{"name":"South Africa Women vs Sri Lanka Women, 3rd ODI (ICC Championship Match)","status":"Sri Lanka Women won by 6 wkts","venue":"Senwes Park, Potchefstroom","date":"2024-04-17","teams":["South Africa Women","Sri Lanka Women"]}]}`;
+
+        // Parse JSON data
+        var liveScoresData = JSON.parse(liveScoresJson);
+
+        // Function to display all matches data
+        function displayAllMatchesData() {
+            var liveScoresContainer = document.getElementById('liveScoresContainer');
+            liveScoresContainer.innerHTML = '';
+
+            // Check if liveScoresData is defined and not empty
+            if (liveScoresData && liveScoresData.data && liveScoresData.data.length > 0) {
+                liveScoresData.data.forEach(match => {
+                    // Create match container
+                    var matchContainer = document.createElement('div');
+                    matchContainer.classList.add('card', 'mb-3');
+                    matchContainer.style.width = '100%';
+
+                    // Match body
+                    var matchBody = document.createElement('div');
+                    matchBody.classList.add('card-body');
+                    matchContainer.appendChild(matchBody);
+
+                    // Match name
+                    var matchName = document.createElement('h5');
+                    matchName.classList.add('card-title');
+                    matchName.textContent = match.name;
+                    matchBody.appendChild(matchName);
+
+                    // Match status
+                    var matchStatus = document.createElement('p');
+                    matchStatus.classList.add('card-text');
+                    matchStatus.textContent = match.status;
+                    matchBody.appendChild(matchStatus);
+
+                    // Append match container to live scores container
+                    liveScoresContainer.appendChild(matchContainer);
+                });
+            } else {
+                // Display a message if live scores data is empty
+                liveScoresContainer.innerHTML = '<p>No matches data available</p>';
+                
+                 // Add a retry button with reload function
+                var retryButton = document.createElement('button');
+                retryButton.classList.add('btn', 'btn-primary', 'mt-3');
+                retryButton.textContent = 'Retry';
+                retryButton.onclick = function() {
+                    location.reload(); // Reload the page to retry fetching the data
+                };
+                liveScoresContainer.appendChild(retryButton);
+            }
+        }
+
+        // Display all matches data
+        displayAllMatchesData();
+        
+        // Check if API key is blocked
+        function checkApiKeyBlocked() {
+            var blockedMessage = 'Blocked for 15 minutes';
+            if (liveScoresData && liveScoresData.status === 'failure' && liveScoresData.reason === blockedMessage) {
+                alert('Sorry, something went wrong. Please try again later.');
+            }
+        }
+
+        // Check if API key is blocked
+        checkApiKeyBlocked();
+        /*]]>*/
+    </script>
+</body>
+
+</html>

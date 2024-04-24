@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>My Blogs</title>
+	<!-- Link Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<style>
+		.container {
+			max-width: 100%;
+			margin: 50px auto;
+		}
+
+		.alert {
+			margin-bottom: 20px;
+		}
+
+		.btn-add-blog {
+			margin-top: 20px;
+		}
+
+		.blog-actions a {
+			margin-right: 10px;
+		}
+
+		.table-content {
+			max-height: 200px;
+			/* Adjust the max-height as needed */
+			overflow-y: auto;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1 class="text-center">My Blogs</h1>
+		<!-- Display message if user has no blogs -->
+		<div th:if="${myBlogs == null or myBlogs.size() == 0}" class="alert alert-info">No blogs found. Please add Your
+			First !!</div>
+		<!-- Display table if user has blogs -->
+		<div th:if="${myBlogs != null and myBlogs.size() > 0}">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Content</th>
+						<th>Created At</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody class="table-content">
+					<tr th:each="blog : ${myBlogs}">
+						<td th:text="${blog.title}"></td>
+
+						<td
+							th:text="${blog.content.length() > 50 ? blog.content.substring(0, 50) + '...' : blog.content}">
+						</td>
+
+						<td th:text="${blog.createdAt}"></td>
+						<td>
+							<div class="btn-group" role="group">
+								<a th:href="@{'/user/edit/' + ${blog.id}}" class="btn btn-primary ml-1">Edit</a>
+								<a th:href="@{'/user/delete/' + ${blog.id}}" class="btn btn-danger"
+									onclick="return confirm('Are you sure you want to delete this blog?')">Delete</a>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- Add New Blog button -->
+		<a href="/user/addNewBlog" class="btn btn-success btn-add-blog">Add New Blog</a>
+		<a href="/user/home" class="btn btn-secondary ml-3 mt-4">Back</a>
+
+	</div>
+</body>
+
+</html>

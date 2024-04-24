@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Confirmation</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<style>
+		body {
+			background-color: #f8f9fa;
+		}
+
+		.container {
+			max-width: 600px;
+		}
+
+		.card {
+			margin-top: 50px;
+			border-radius: 15px;
+		}
+
+		.card-header {
+			background-color: #0d6efd;
+			color: white;
+			border-radius: 15px 15px 0 0;
+		}
+
+		.btn-primary {
+			background-color: #0d6efd;
+			border-color: #0d6efd;
+		}
+	</style>
+</head>
+
+<body class="d-flex flex-column vh-100">
+	<!-- Include Navigation Bar -->
+	<div th:replace="NavBar.html"></div>
+
+
+	<div th:if="${errors}" class="container mt-5">
+		<!-- Check if errors exist in the model and display them -->
+		<div class="alert alert-danger" role="alert">
+			<span th:text="${errors}"></span>
+			<a href="/login" class="btn btn-primary">Login Now</a>
+		</div>
+	</div>
+
+	<div th:unless="${errors}" class="container">
+		<div class="card">
+			<div class="card-header text-center">
+				<h1 class="mb-0">Registration Successful!</h1>
+			</div>
+			<div class="card-body">
+				<div class="mb-3">
+					<h4 class="card-title text-info">Here is your registered data:</h4>
+					<ul class="list-group list-group-flush">
+
+						<li class="list-group-item"><strong>Full Name :</strong> <span
+								th:text="${userData.fullName}"></span>
+						</li>
+						<li class="list-group-item"><strong>Email :</strong> <span th:text="${userData.email}"></span>
+						</li>
+						<li class="list-group-item"><strong>Username :</strong> <span
+								th:text="${userData.username}"></span>
+						</li>
+						<li class="list-group-item"><strong>Date of Birth :</strong> <span
+								th:text="${userData.dateOfBirth}"></span></li>
+						<li class="list-group-item"><strong>Gender :</strong> <span th:text="${userData.gender}"></span>
+						</li>
+						<li class="list-group-item"><strong>Phone Number :</strong> <span
+								th:text="${userData.phoneNo}"></span></li>
+						<li class="list-group-item"><strong>User ID :</strong> <span th:text="${userData.id}"></span>
+						</li>
+
+
+					</ul>
+				</div>
+				<div class="text-center">
+					<p class="text-success">Thank you for your registration!</p>
+					<a href="/login" class="btn btn-primary">Login Now</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BloGiFy Home</title>
+    <!-- Link Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS for enhanced styling -->
+    <style>
+        /* Add custom styles here */
+        .jumbotron {
+            background-image: url('https://source.unsplash.com/1600x900/?nature');
+            background-size: cover;
+            color: #fff;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        /* Added margin to push down the feature sections */
+        .feature-section {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Include Navigation Bar -->
+    <div th:replace="NavBar.html"></div>
+
+    <!-- Main Content -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Welcome to BloGiFy</h1>
+            <p class="lead">Explore the world of creativity and innovation.</p>
+        </div>
+    </div>
+
+    <div class="container feature-section">
+        <div class="row">
+            <div class="col-md-4">
+                <i class="fas fa-globe feature-icon"></i>
+                <h2 class="feature-title">Global Reach</h2>
+                <p class="feature-description">Connect with a global audience and share your ideas.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-lightbulb feature-icon"></i>
+                <h2 class="feature-title">Innovation</h2>
+                <p class="feature-description">Fuel your creativity and explore innovative solutions.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-heart feature-icon"></i>
+                <h2 class="feature-title">Passion</h2>
+                <p class="feature-description">Share your passion and inspire others.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-3">
+        <div class="container text-center">
+            <p>&copy; 2024 My Project. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS dependencies -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
